@@ -1,4 +1,4 @@
-package client;
+package boardmechanics;
 
 public class Coordinate {
 
