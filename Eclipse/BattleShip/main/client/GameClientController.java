@@ -21,6 +21,7 @@ public class GameClientController extends AbstractClient implements ActionListen
 	private CreateAccountController createaccountcontroller;
 	private BattleShipController battleshipcontroller;
 	private BattleShipPanel battleshippanel;
+	private Coordinate attackCoord;
 	
 	public GameClientController()
 	{
@@ -36,6 +37,11 @@ public class GameClientController extends AbstractClient implements ActionListen
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void setAttackCoord(Coordinate coord)
+	{
+		attackCoord = coord;
 	}
 
 	@Override
@@ -84,6 +90,16 @@ public class GameClientController extends AbstractClient implements ActionListen
 	    	Coordinate coord = (Coordinate)arg0;
 	    	
 	    	battleshippanel.updateBoard(coord);
+	    }
+	    
+	    //If we get a boolean, we know the result of our attack and should update the board accordingly
+	    else if (arg0.equals(true))
+	    {
+	    	
+	    }
+	    else if (arg0.equals(false))
+	    {
+	    	
 	    }
 	}  
 	

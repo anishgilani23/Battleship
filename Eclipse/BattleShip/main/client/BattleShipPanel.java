@@ -184,7 +184,7 @@ public class BattleShipPanel extends JPanel {
 	}
 
 	public void updateBoard(Coordinate coord) {
-		//This method was called
+		System.out.println("This method was called");
 		for (int i = 0; i < ourCoords.size(); i++)
 		{
 			if (ourCoords.get(i).equals(coord))
@@ -192,17 +192,23 @@ public class BattleShipPanel extends JPanel {
 				if (ourCoords.get(i).getMark() == true)
 				{
 					ourCoords.get(i).setHit(true);
-					/*
+					
 					try {
 						control.sendToServer("Hit");
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					*/
+					
 					map.get(coord).setBackground(Color.BLACK);
 				}
 			}
 		}
+	}
+	
+	public void attackResult(Coordinate coord, boolean success)
+	{
+		System.out.println("Attack Result: " + success);
+		
 	}
 }

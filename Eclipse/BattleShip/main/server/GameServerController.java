@@ -21,6 +21,7 @@ public class GameServerController extends AbstractServer implements ActionListen
 	private ConnectionToClient winner;
 	private List<ConnectionToClient> clients;
 	private GameServerData data;
+	private ConnectionToClient lastMove;
 	private static GameServerPanel panel;
 	private boolean running;
 	private DB db;
@@ -190,15 +191,30 @@ public class GameServerController extends AbstractServer implements ActionListen
 	    		if (clients.get(0).equals(arg1))
 	    		{
 	    			clients.get(1).sendToClient(arg0);
+	    			lastMove = clients.get(0);
 	    		}
 	    		else
 	    		{
 	    			clients.get(0).sendToClient(arg0);
+	    			lastMove = clients.get(1);
 	    		}
 	    		Coordinate coord = (Coordinate)arg0;
 	    		panel.getTextArea().append("Client " + arg1.getId() + " Sent an attack to coordinate (" + coord.getX() + "," + coord.getY() + ")\n");
 	    	}
 	    	catch(Exception e)
+	    	{
+	    		e.printStackTrace();
+	    	}
+	    }
+	    
+	    //If we recieve a string, know that there was a hit and send to the appropriate client that there was indeed a hit
+	    else if (arg0.equals("Hit"))
+	    {
+	    	boolean hit = true;
+	    	try {
+	    		lastMove.sendToClient(hit);
+	    	}
+	    	catch (Exception e)
 	    	{
 	    		e.printStackTrace();
 	    	}
