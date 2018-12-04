@@ -105,4 +105,9 @@ public class DB {
 		return yesno;
 	}
 	
+	public Connection getConnection()
+	{
+		return conn;
+	}
+	
 }

@@ -241,6 +241,7 @@ public class GameServerController extends AbstractServer implements ActionListen
 	
 	public static void main(String[] args)
 	{
+		//Set the GameServerPanel
 		panel = new GameServerPanel(new GameServerController());
 	}
 	
