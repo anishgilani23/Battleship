@@ -38,23 +38,26 @@ public class LoginController implements ActionListener {
 	    {
 	      // Get the username and password the user entered.
 	      LoginPanel loginPanel = (LoginPanel)container.getComponent(1);
-	      LoginData data = new LoginData(loginPanel.getUsername(), loginPanel.getPassword());
+	      String username = loginPanel.getUsername();
+	      String password = loginPanel.getPassword();
 	      
 	      // Check the validity of the information locally first.
-	      if (data.getUsername().equals("") || data.getPassword().equals(""))
+	      if (username.equals("") ||password.equals(""))
 	      {
 	        displayError("You must enter a username and password.");
 	        return;
 	      }
 
 	      // Submit the login information to the server.
+	      LoginData logindata = new LoginData(username, password);
 	      try
 	      {
-	        client.sendToServer(data);
+	        client.sendToServer(logindata);
 	      }
 	      catch (IOException e)
 	      {
 	        displayError("Error connecting to the server.");
+	        e.printStackTrace();
 	      }
 	    }
 	  }
@@ -66,7 +69,7 @@ public class LoginController implements ActionListener {
 	    GameClientPanel clientGUI = (GameClientPanel)SwingUtilities.getWindowAncestor(loginPanel);
 	    clientGUI.setUser(new User(loginPanel.getUsername(), loginPanel.getPassword()));
 	    CardLayout cardLayout = (CardLayout)container.getLayout();
-	    cardLayout.show(container, "4");
+	    cardLayout.show(container, "5");
 	  }
 
 	  // Method that displays a message in the error label.

@@ -10,10 +10,15 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 
 public class InitialPanel extends JPanel{
+	private InitialController controller;
 	private JTextField ip;
 	private JTextField port;
-	public InitialPanel(JPanel container) {
+	private GameClientController client;
+	public InitialPanel(JPanel container, GameClientController gc) {
 		this.setLayout(null);
+		
+		client = gc;
+		controller = new InitialController(container);
 		
 		JLabel lblIpAddress = new JLabel("Ip Address");
 		lblIpAddress.setBounds(12, 34, 117, 21);
@@ -25,6 +30,8 @@ public class InitialPanel extends JPanel{
 		
 		JButton btnNewButton = new JButton("Create Account");
 		btnNewButton.setBounds(12, 107, 168, 51);
+		btnNewButton.setActionCommand("Create");
+		btnNewButton.addActionListener(controller);
 		this.add(btnNewButton);
 		
 		ip = new JTextField();
@@ -38,11 +45,14 @@ public class InitialPanel extends JPanel{
 		port.setColumns(10);
 		
 		//Set visibility and other values such as size
-		this.setSize(new Dimension(400, 200));
+		//this.setSize(new Dimension(400, 200));
+		this.setSize(new Dimension(850, 450));
 		
 		JButton btnLogin = new JButton("Login");
 		btnLogin.setBounds(210, 107, 168, 51);
-		add(btnLogin);
+		btnLogin.setActionCommand("Login");
+		btnLogin.addActionListener(controller);
+		this.add(btnLogin);
 		this.setVisible(true);
 	}
 }

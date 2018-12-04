@@ -1,12 +1,13 @@
 package main.boardmechanics;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Ship {
 	private String type;
 	private boolean sunk;
 	private int length;
-	private ArrayList<Coordinate> position;
+	private List<Coordinate> position;
 	
 	public Ship()
 	{
@@ -44,12 +45,12 @@ public class Ship {
 		return type;
 	}
 	
-	public void setPosition(ArrayList<Coordinate> position)
+	public void setPosition(List<Coordinate> location)
 	{
-		this.position = position;
+		this.position = location;
 	}
 	
-	public ArrayList<Coordinate> getPosition()
+	public List<Coordinate> getPosition()
 	{
 		return position;
 	}

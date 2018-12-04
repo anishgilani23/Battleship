@@ -7,8 +7,15 @@ public class ShipsetController implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
+		//First, get the command
+		String command = arg0.getActionCommand();
 		
+		//If the command is the button, perform the necessary actions
+		if (command.equals("Submit"))
+		{
+			System.out.println("HEREEEEEEEEEEEEEEE");
+			
+		}
 	}
 
 }

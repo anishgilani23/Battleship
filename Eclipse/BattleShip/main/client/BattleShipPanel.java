@@ -4,18 +4,25 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import main.boardmechanics.Board;
+import main.boardmechanics.Coordinate;
+import main.boardmechanics.Ship;
+
 public class BattleShipPanel extends JPanel {
 	public BattleShipPanel(JPanel container)
 	{
 		//Set layout to absolute
 		this.setLayout(null);
+		this.setSize(new Dimension(850, 450));
 		
 		//Add opponent board of buttons
 		JLabel theirBoard = new JLabel();
@@ -55,6 +62,16 @@ public class BattleShipPanel extends JPanel {
 		attack.setBounds(380, 250, 90, 40);
 		this.add(attack);
 		
+		//First, set the board in the backend
+		Board board = new Board();
+		ArrayList<Ship> ships = new ArrayList<Ship>();
+		ships = board.getShips();
+		Ship carrier = ships.get(0);
+		//Ship battleship = ships.get(1);
+		//Ship cruiser = ships.get(2);
+		//Ship submarine = ships.get(3);
+		//Ship destroyer = ships.get(4);
+		
 		//Now add player board
 		List<JButton> myButtons = new ArrayList<JButton>();
 		JLabel yourBoard = new JLabel();
@@ -65,24 +82,45 @@ public class BattleShipPanel extends JPanel {
 		x = 485;
 		y = 50;
 		
-		for (int i = 0; i < 10; i++)
+		//Make an arraylist of coordinates
+		List<Coordinate> myCoords = new ArrayList<Coordinate>();
+		Map<Coordinate, JButton> map = new HashMap<Coordinate, JButton>();
+		
+		
+		//y loop
+		for (int i = 1; i < 11; i++)
 		{
+			Coordinate coord = new Coordinate();
 			x = 485;
-			for (int j = 0; j < 10; j++)
+			//x loop
+			for (int j = 1; j < 11; j++)
 			{
 				String b = new String("button");
 				JButton button = new JButton();
 				button.setBounds(x, y, width, height);
 				button.setEnabled(false);
 				myButtons.add(button);
+				coord.setX(j);
+				coord.setY(i);
+				
+				//Check and see where the ships are and highlight those colors
+				for (int k = 0; k < carrier.getLength(); k++)
+				{
+					button.setForeground(Color.BLUE);
+				}
+				
 				x += 35;
 				this.add(button);
+				
+				//Add to the map
+				map.put(coord, button);
 			}
 			y += 35;
 		}
 		
-		//Set some properties for the client panel
-		this.setSize(new Dimension(850, 450));
+		
+		//After all of this, make the panel visible
 		this.setVisible(true);
 	}
+	
 }

@@ -33,7 +33,7 @@ public class InitialController implements ActionListener{
 	    }
 	    
 	    // The Create button takes the user to the create account panel.
-	    else if (command.equals("Create Account"))
+	    else if (command.equals("Create"))
 	    {
 	      CreateAccountPanel createAccountPanel = (CreateAccountPanel)container.getComponent(2);
 	      createAccountPanel.setError("");
