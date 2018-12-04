@@ -46,12 +46,14 @@ public class GameServerController extends AbstractServer implements ActionListen
 		//Displays client connection in server log
 		data.addToLog("Client " + Long.toString(client.getId()) + " Connected\n");
 		panel.getTextArea().append("Client " + Long.toString(client.getId()) + " Connected\n");
+		clients.add(client);
 	}
 	
 	public void clientDisconnected(ConnectionToClient client)
 	{
 		data.addToLog("Client " + Long.toString(client.getId()) + " Disconnected\n");
 		panel.getTextArea().append(("Client " + Long.toString(client.getId()) + " Disconnected\n"));
+		clients.remove(client);
 	}
 	
 	public void actionPerformed(ActionEvent ae)
@@ -193,6 +195,8 @@ public class GameServerController extends AbstractServer implements ActionListen
 	    		{
 	    			clients.get(0).sendToClient(arg0);
 	    		}
+	    		Coordinate coord = (Coordinate)arg0;
+	    		panel.getTextArea().append("Client " + arg1.getId() + " Sent an attack to coordinate (" + coord.getX() + "," + coord.getY() + ")\n");
 	    	}
 	    	catch(Exception e)
 	    	{

@@ -2,6 +2,7 @@ package main.client;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,8 +19,19 @@ import main.boardmechanics.Coordinate;
 import main.boardmechanics.Ship;
 
 public class BattleShipPanel extends JPanel {
-	public BattleShipPanel(JPanel container)
+	private GameClientController control;
+	private List<JButton> theirButtons;
+	private List<Coordinate> theirCoords;
+	private List<Coordinate> ourCoords;
+	Map<Coordinate, JButton> map;
+	
+	public BattleShipPanel(JPanel container, GameClientController control)
 	{
+		//Create a controller for the panel
+		BattleShipController controller = new BattleShipController(control);
+		control.setBattleShipController(controller);
+		this.control = control;
+		
 		//Set layout to absolute
 		this.setLayout(null);
 		this.setSize(new Dimension(850, 450));
@@ -34,14 +46,22 @@ public class BattleShipPanel extends JPanel {
 		int y = 50;
 		int height = 35;
 		int width = 35;
-		List<JButton> theirButtons = new ArrayList<JButton>();
+		theirButtons = new ArrayList<JButton>();
+		theirCoords = new ArrayList<Coordinate>();
 		
 		for (int i = 0; i < 10; i++)
 		{
 			x = 12;
 			for (int j = 0; j < 10; j++)
 			{
+				Coordinate coord = new Coordinate();
+				coord.setX(j);
+				coord.setY(i);
+				theirCoords.add(coord);
 				JButton button = new JButton();
+				String actionCommand = i + "-" + j;
+				button.setActionCommand(actionCommand);
+				button.addActionListener(controller);
 				theirButtons.add(button);
 				button.setBounds(x, y, width, height);
 				x += 35;
@@ -57,20 +77,14 @@ public class BattleShipPanel extends JPanel {
 		turn.setForeground(Color.GREEN);
 		this.add(turn);
 		
-		JButton attack = new JButton();
-		attack.setText("Attack!");
-		attack.setBounds(380, 250, 90, 40);
-		this.add(attack);
-		
 		//First, set the board in the backend
 		Board board = new Board();
-		ArrayList<Ship> ships = new ArrayList<Ship>();
-		ships = board.getShips();
+		ArrayList<Ship> ships = board.getShips();
 		Ship carrier = ships.get(0);
-		//Ship battleship = ships.get(1);
-		//Ship cruiser = ships.get(2);
-		//Ship submarine = ships.get(3);
-		//Ship destroyer = ships.get(4);
+		Ship battleship = ships.get(1);
+		Ship cruiser = ships.get(2);
+		Ship submarine = ships.get(3);
+		Ship destroyer = ships.get(4);
 		
 		//Now add player board
 		List<JButton> myButtons = new ArrayList<JButton>();
@@ -83,8 +97,8 @@ public class BattleShipPanel extends JPanel {
 		y = 50;
 		
 		//Make an arraylist of coordinates
-		List<Coordinate> myCoords = new ArrayList<Coordinate>();
-		Map<Coordinate, JButton> map = new HashMap<Coordinate, JButton>();
+		ourCoords = new ArrayList<Coordinate>();
+		map = new HashMap<Coordinate, JButton>();
 		
 		
 		//y loop
@@ -98,19 +112,65 @@ public class BattleShipPanel extends JPanel {
 				String b = new String("button");
 				JButton button = new JButton();
 				button.setBounds(x, y, width, height);
-				button.setEnabled(false);
-				myButtons.add(button);
 				coord.setX(j);
 				coord.setY(i);
-				
+				button.setOpaque(true);
+
 				//Check and see where the ships are and highlight those colors
 				for (int k = 0; k < carrier.getLength(); k++)
 				{
-					button.setForeground(Color.BLUE);
+					//First the carrier
+					if (carrier.getPosition().get(k).getX() == coord.getX() && carrier.getPosition().get(k).getY() == coord.getY())
+					{
+						button.setBackground(Color.BLUE);
+						coord.markOff();
+					}
 				}
 				
+				for (int k = 0; k < battleship.getLength(); k++)
+				{
+					//Now the battleship
+					if (battleship.getPosition().get(k).getX() == coord.getX() && battleship.getPosition().get(k).getY() == coord.getY())
+					{
+						button.setBackground(Color.GREEN);
+						coord.markOff();
+					}
+				}
+				
+				for (int k = 0; k < cruiser.getLength(); k++)
+				{
+					//Now the cruiser
+					if (cruiser.getPosition().get(k).getX() == coord.getX() && battleship.getPosition().get(k).getY() == coord.getY())
+					{
+						button.setBackground(Color.RED);
+						coord.markOff();
+					}
+				}
+				
+				for (int k = 0; k < submarine.getLength(); k++)
+				{
+					//Now the submarine
+					if (submarine.getPosition().get(k).getX() == coord.getX() && battleship.getPosition().get(k).getY() == coord.getY())
+					{
+						button.setBackground(Color.ORANGE);
+						coord.markOff();
+					}
+				}
+				
+				for (int k = 0; k < destroyer.getLength(); k++)
+				{
+					//Now the destoyer
+					if (destroyer.getPosition().get(k).getX() == coord.getX() && battleship.getPosition().get(k).getY() == coord.getY())
+					{
+						button.setBackground(Color.PINK);
+						coord.markOff();
+					}
+				}
+				ourCoords.add(coord);
 				x += 35;
 				this.add(button);
+				button.setEnabled(false);
+				myButtons.add(button);
 				
 				//Add to the map
 				map.put(coord, button);
@@ -122,5 +182,27 @@ public class BattleShipPanel extends JPanel {
 		//After all of this, make the panel visible
 		this.setVisible(true);
 	}
-	
+
+	public void updateBoard(Coordinate coord) {
+		//This method was called
+		for (int i = 0; i < ourCoords.size(); i++)
+		{
+			if (ourCoords.get(i).equals(coord))
+			{
+				if (ourCoords.get(i).getMark() == true)
+				{
+					ourCoords.get(i).setHit(true);
+					/*
+					try {
+						control.sendToServer("Hit");
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					*/
+					map.get(coord).setBackground(Color.BLACK);
+				}
+			}
+		}
+	}
 }

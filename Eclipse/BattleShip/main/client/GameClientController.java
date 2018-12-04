@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import ocsf.client.AbstractClient;
-
+import main.boardmechanics.Coordinate;
 import main.utils.Error;
 
 public class GameClientController extends AbstractClient implements ActionListener{
@@ -19,6 +19,8 @@ public class GameClientController extends AbstractClient implements ActionListen
 	private static GameClientPanel gui;
 	private LoginController logincontroller;
 	private CreateAccountController createaccountcontroller;
+	private BattleShipController battleshipcontroller;
+	private BattleShipPanel battleshippanel;
 	
 	public GameClientController()
 	{
@@ -75,6 +77,14 @@ public class GameClientController extends AbstractClient implements ActionListen
 	        createaccountcontroller.displayError(error.getMessage());
 	      }
 	    }
+	    
+	    //If we receieve a coordinate, then we know that we have been attacked and we should update our display accordingly
+	    else if (arg0 instanceof Coordinate)
+	    {
+	    	Coordinate coord = (Coordinate)arg0;
+	    	
+	    	battleshippanel.updateBoard(coord);
+	    }
 	}  
 	
 	public void actionPerformed(ActionEvent e)
@@ -89,5 +99,15 @@ public class GameClientController extends AbstractClient implements ActionListen
 	public void setCreateAccountController(CreateAccountController controller)
 	{
 		this.createaccountcontroller = controller;
+	}
+	
+	public void setBattleShipController(BattleShipController controller)
+	{
+		this.battleshipcontroller = controller;
+	}
+	
+	public void setBattleShipPanel(BattleShipPanel panel)
+	{
+		this.battleshippanel = panel;
 	}
 }

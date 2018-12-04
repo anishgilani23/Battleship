@@ -15,6 +15,7 @@ public class Board {
 		ships = new ArrayList<Ship>();
 		Theirgrid = new ArrayList<Coordinate>();
 		myGrid = new ArrayList<Coordinate>();
+		this.setShips();
 	}
 	
 	public void initTheirGrid()
@@ -120,6 +121,7 @@ public class Board {
 			Coordinate c = new Coordinate();
 			c.setX(x);
 			c.setY(y);
+			
 			position.add(c);
 			if (horizontal)
 			{
@@ -135,8 +137,227 @@ public class Board {
 		carrier.setLength(5);
 		carrier.setType("Carrier");
 		carrier.setPosition(position);
+		ships.add(carrier);
 		
-		//Now add Frigrate
+		//Now add Frigrate and make sure it doesn't overlap any other ships
+		horizontal = false;
+		min = 1;
+		max = 6;
+		x = ThreadLocalRandom.current().nextInt(min, max + 1);
+		y = 1;
+		if (x == 3 || x == 4 || x == 5 || x == 6)
+		{
+			double chance = Math.random();
+			if (chance > .50)
+			{
+				horizontal = true;
+			}
+			else
+			{
+				horizontal = false;
+			}
+		}
+		if (horizontal == true)
+		{
+			max = 10;
+			y = ThreadLocalRandom.current().nextInt(min, max+ 1);
+		}
+		else if (horizontal = false)
+		{
+			min = 4;
+			max = 6;
+			y = ThreadLocalRandom.current().nextInt(min, max+ 1);
+		}
+		
+		//Set the location of the frigrate
+		position = new ArrayList<Coordinate>();
+		for (int i = 0; i < 4; i++)
+		{
+			Coordinate c = new Coordinate();
+			c.setX(x);
+			c.setY(y);
+			
+			position.add(c);
+			if (horizontal)
+			{
+				x += 1;
+			}
+			else
+			{
+				y += 1;
+			}
+		}
+		
+		Ship frigrate = new Ship();
+		frigrate.setLength(4);
+		frigrate.setType("Battleship");
+		frigrate.setPosition(position);
+		ships.add(frigrate);
+		
+		//Now add Cruiser and make sure it doesn't overlap any other ships
+		horizontal = false;
+		min = 1;
+		max = 6;
+		x = ThreadLocalRandom.current().nextInt(min, max + 1);
+		y = 1;
+		if (x == 2 || x == 4 || x == 5 || x == 6 || x == 7 || x == 8)
+		{
+			double chance = Math.random();
+			if (chance > .50)
+			{
+				horizontal = true;
+			}
+			else
+			{
+				horizontal = false;
+			}
+		}
+		if (horizontal == true)
+		{
+			max = 10;
+			y = ThreadLocalRandom.current().nextInt(min, max+ 1);
+		}
+		else if (horizontal = false)
+		{
+			min = 4;
+			max = 6;
+			y = ThreadLocalRandom.current().nextInt(min, max+ 1);
+		}
+		
+		//Set the location of the cruiser
+		position = new ArrayList<Coordinate>();
+		for (int i = 0; i < 3; i++)
+		{
+			Coordinate c = new Coordinate();
+			c.setX(x);
+			c.setY(y);
+			
+			position.add(c);
+			if (horizontal)
+			{
+				x += 1;
+			}
+			else
+			{
+				y += 1;
+			}
+		}
+		
+		Ship cruiser = new Ship();
+		cruiser.setLength(3);
+		cruiser.setType("Cruiser");
+		cruiser.setPosition(position);
+		ships.add(cruiser);
+		
+		//Now add destroyer and make sure it doesn't overlap any other ships
+		horizontal = false;
+		min = 1;
+		max = 6;
+		x = ThreadLocalRandom.current().nextInt(min, max + 1);
+		y = 1;
+		if (x == 2 || x == 4 || x == 5 || x == 6 || x == 7 || x == 8)
+		{
+			double chance = Math.random();
+			if (chance > .50)
+			{
+				horizontal = true;
+			}
+			else
+			{
+				horizontal = false;
+			}
+		}
+		if (horizontal == true)
+		{
+			max = 10;
+			y = ThreadLocalRandom.current().nextInt(min, max+ 1);
+		}
+		else if (horizontal = false)
+		{
+			min = 4;
+			max = 6;
+			y = ThreadLocalRandom.current().nextInt(min, max+ 1);
+		}
+		
+		//Set the location of the destroyer
+		position = new ArrayList<Coordinate>();
+		for (int i = 0; i < 3; i++)
+		{
+			Coordinate c = new Coordinate();
+			c.setX(x);
+			c.setY(y);
+			
+			position.add(c);
+			if (horizontal)
+			{
+				x += 1;
+			}
+			else
+			{
+				y += 1;
+			}
+		}
+		
+		Ship submarine = new Ship();
+		submarine.setLength(3);
+		submarine.setType("Submarine");
+		submarine.setPosition(position);
+		ships.add(submarine);
+		
+		//Now add Destroyer and make sure it doesn't overlap any other ships
+		horizontal = false;
+		min = 1;
+		max = 8;
+		x = ThreadLocalRandom.current().nextInt(min, max + 1);
+		y = 1;
+		if (x == 2 || x == 4 || x == 5 || x == 6 || x == 7 || x == 8 || x == 9)
+		{
+			double chance = Math.random();
+			if (chance > .50)
+			{
+				horizontal = true;
+			}
+			else
+			{
+				horizontal = false;
+			}
+		}
+		if (horizontal == true)
+		{
+			max = 10;
+			y = ThreadLocalRandom.current().nextInt(min, max+ 1);
+		}
+		else if (horizontal = false)
+		{
+			min = 4;
+			max = 6;
+			y = ThreadLocalRandom.current().nextInt(min, max+ 1);
+		}
+		
+		//Set the location of the destroyer
+		position = new ArrayList<Coordinate>();
+		for (int i = 0; i < 3; i++)
+		{
+			Coordinate c = new Coordinate();
+			c.setX(x);
+			c.setY(y);
+			
+			position.add(c);
+			if (horizontal)
+			{
+				x += 1;
+			}
+			else
+			{
+				y += 1;
+			}
+		}
+		
+		Ship destroyer = new Ship();
+		destroyer.setLength(3);
+		destroyer.setType("Cruiser");
+		destroyer.setPosition(position);
+		ships.add(destroyer);
 	}
 	
 	public ArrayList<Ship> getShips()

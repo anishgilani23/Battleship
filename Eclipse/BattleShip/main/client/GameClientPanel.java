@@ -52,7 +52,7 @@ public class GameClientPanel extends JFrame {
 	    view2 = new LoginPanel(container, controller);
 	    view3 = new CreateAccountPanel(container, controller);
 	    view4 = new ShipsetPanel(new ShipsetController(), container);
-	    view5 = new BattleShipPanel(container);
+	    view5 = new BattleShipPanel(container, controller);
 	    
 	    // Add the views to the card layout container
 	    container.add(view1, "1");
