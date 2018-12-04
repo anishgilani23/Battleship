@@ -22,15 +22,18 @@ public class GameClientPanel extends JFrame {
 	private JPanel view2;
 	private JPanel view3;
 	private JPanel view4;
-	private JPanel view5;
 	
 	//Default Constructor	
-	public GameClientPanel()
+	public GameClientPanel(String ip, int port)
 	{
 		//Setup the controller and open connection with server
-		controller = new GameClientController();
-	    controller.setHost("localhost");
-	    controller.setPort(8300);
+		controller = new GameClientController(ip, port);
+		
+		//Set the port and host using command line arguments
+	    controller.setHost(ip);
+	    controller.setPort(port);
+	    
+	    //Try to open the connection
 	    try
 	    {
 	      controller.openConnection();
@@ -51,15 +54,13 @@ public class GameClientPanel extends JFrame {
 	    view1 = new InitialPanel(container, controller);
 	    view2 = new LoginPanel(container, controller);
 	    view3 = new CreateAccountPanel(container, controller);
-	    view4 = new ShipsetPanel(new ShipsetController(), container);
-	    view5 = new BattleShipPanel(container, controller);
+	    view4 = new BattleShipPanel(container, controller);
 	    
 	    // Add the views to the card layout container
 	    container.add(view1, "1");
 	    container.add(view2, "2");
 	    container.add(view3, "3");
 	    container.add(view4, "4");
-	    container.add(view5, "5");
 	    
 	    // Show the initial view in the card layout.
 	    cardLayout.show(container, "1");
@@ -78,7 +79,10 @@ public class GameClientPanel extends JFrame {
 	}
 	
 	public static void main(String[] args) {
-		// Main program - Show panels in the right order
-		new GameClientPanel();
+		// Main program - pass ip and port over command line arguments
+		String ip = args[0];
+		int port = Integer.parseInt(args[1]);
+	    
+		new GameClientPanel(ip, port);
 	}
 }

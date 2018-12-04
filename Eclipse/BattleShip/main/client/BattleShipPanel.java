@@ -70,13 +70,6 @@ public class BattleShipPanel extends JPanel {
 			y += 35;
 		}
 		
-		//Now add attack button and label for determining who's turn it is
-		JLabel turn = new JLabel();
-		turn.setText("Your Turn!");
-		turn.setBounds(385, 200, 90, 40);
-		turn.setForeground(Color.GREEN);
-		this.add(turn);
-		
 		//First, set the board in the backend
 		Board board = new Board();
 		ArrayList<Ship> ships = board.getShips();

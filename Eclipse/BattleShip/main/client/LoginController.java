@@ -69,7 +69,7 @@ public class LoginController implements ActionListener {
 	    GameClientPanel clientGUI = (GameClientPanel)SwingUtilities.getWindowAncestor(loginPanel);
 	    clientGUI.setUser(new User(loginPanel.getUsername(), loginPanel.getPassword()));
 	    CardLayout cardLayout = (CardLayout)container.getLayout();
-	    cardLayout.show(container, "5");
+	    cardLayout.show(container, "4");
 	  }
 
 	  // Method that displays a message in the error label.

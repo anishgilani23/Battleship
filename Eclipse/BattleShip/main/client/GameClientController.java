@@ -15,7 +15,6 @@ import main.boardmechanics.Coordinate;
 import main.utils.Error;
 
 public class GameClientController extends AbstractClient implements ActionListener{
-	private GameClientData data;
 	private static GameClientPanel gui;
 	private LoginController logincontroller;
 	private CreateAccountController createaccountcontroller;
@@ -23,10 +22,9 @@ public class GameClientController extends AbstractClient implements ActionListen
 	private BattleShipPanel battleshippanel;
 	private Coordinate attackCoord;
 	
-	public GameClientController()
+	public GameClientController(String ip, int port)
 	{
-		super("localhost", 8300);
-		data = new GameClientData();
+		super(ip, port);
 	}
 	
 	public void close()
@@ -102,6 +100,12 @@ public class GameClientController extends AbstractClient implements ActionListen
 	    	
 	    }
 	}  
+	
+	//Hook method called when the connection is closed
+	protected void connectionClosed()
+	{
+		System.out.println("Connection has been closed");
+	}
 	
 	public void actionPerformed(ActionEvent e)
 	{

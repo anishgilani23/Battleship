@@ -34,6 +34,15 @@ public class BattleShipController implements ActionListener{
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		finally
+		{
+			try {
+				controller.openConnection();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 	}
 
 }
