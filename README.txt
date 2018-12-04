@@ -4,7 +4,7 @@ Steps for running the project:
 # First
 Create the database called "sengine" (stands for software engineering).  You can also name it something else, but be sure that you update the db.properties file.  Leave your root password as blank (again, you can use a password, just update db.properties accordingly).
 
-Now, source in battleship.sql to generate the user table in your database
+Now, source in battleship.sql (Found in the Database directory of this project) to generate the user table in your database
 
 # Second
 Run the server.bat file found in the root folder.  This will start the server, and you should see a gui pop up.
